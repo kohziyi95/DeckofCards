@@ -8,7 +8,7 @@ public class Deck {
     private String deckId;
     private Boolean isShuffled;
     private Integer cardsRemaining;
-    private List<Object> cards;
+    private List<Card> cards;
 
     public String getDeckId() {
         return deckId;
@@ -37,10 +37,10 @@ public class Deck {
         this.isSuccessful = isSuccessful;
     }
 
-    public List<Object> getCards() {
+    public List<Card> getCards() {
         return cards;
     }
-    public void setCards(List<Object> cards) {
+    public void setCards(List<Card> cards) {
         this.cards = cards;
     }
 

@@ -3,6 +3,7 @@ package sg.nus.iss.mockassessment.deckapp.service;
 import java.io.ByteArrayInputStream;
 import java.io.InputStream;
 import java.util.ArrayList;
+import java.util.List;
 
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
@@ -27,12 +28,12 @@ public class DeckService {
         JsonObject data = reader.readObject();
 
         Deck newDeck = new Deck();
-
+        List<Card> newList = new ArrayList<>();
         newDeck.setDeckId(data.getString("deck_id"));
         newDeck.setCardsRemaining(data.getInt("remaining"));
         newDeck.setIsShuffled(data.getBoolean("shuffled"));
         newDeck.setIsSuccessful(data.getBoolean("success"));
-
+        newDeck.setCards(newList);
         return newDeck;
     }
 
@@ -50,7 +51,7 @@ public class DeckService {
         deck.setCardsRemaining(data.getInt("remaining"));
         deck.setIsSuccessful(data.getBoolean("success"));
         JsonArray cardArray = data.getJsonArray("cards");
-        ArrayList<Object> cardList = new ArrayList<>();
+        ArrayList<Card> cardList = new ArrayList<>();
         for (int i = 0; i < count; i++){
             Card newCard = Card.createCard(cardArray.getJsonObject(i));
             cardList.add(newCard);
@@ -59,5 +60,4 @@ public class DeckService {
 
         return deck;
     }
-
 }

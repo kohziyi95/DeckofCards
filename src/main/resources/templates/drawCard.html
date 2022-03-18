@@ -20,17 +20,37 @@
         <p>Cards Remaining: <span th:text="${deck.cardsRemaining}"></span></p>
         
         <form th:action="|/deck/${deck.deckId}|" method="POST">
-            <select name="count">
-                <option th:each="i : ${#numbers.sequence(0,deck.cardsRemaining)}" th:value="${i}" th:text="${i}">
-                </option>
-            </select>
+
+            <span th:if="${deck.cardsRemaining == 0}">
+                <select name="count">
+                    <option th:each="i : ${#numbers.sequence(0,deck.cardsRemaining)}" th:value="${0}" th:text="${0}">
+                    </option>
+                </select>
+            </span>
+
+            <span th:unless="${deck.cardsRemaining == 0}">
+                <select name="count">
+                    <option th:each="i : ${#numbers.sequence(1,deck.cardsRemaining)}" th:value="${i}" th:text="${i}">
+                    </option>
+                </select>
+            </span>
+            
             <input type="text" name="deckId" th:value="${deck.deckId}" hidden>
             <button type="submit">Draw</button>
+            
         </form>
     </div>
     <div>
         <br>
-        <tr th:each="card: ${deck.cards}">
+
+        <!-- For Task 2 -->
+        <!-- <tr th:each="card: ${deck.cards}">
+            <td><img th:src="${card.getImgUrl}"></td>
+        </tr> -->
+
+
+        <!-- For Task 3 -->
+        <tr th:each="card: ${cardList}">
             <td><img th:src="${card.getImgUrl}"></td>
         </tr>
     </div>
