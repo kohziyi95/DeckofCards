@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Deck</title>
+</head>
+<body>
+    <div>
+        <span th:unless="${deck.cardsRemaining == 0}">
+            <img src="https://deckofcardsapi.com/static/img/back.png" alt="Back of Card">
+        </span> 
+        <span th:if="${deck.cardsRemaining == 0}">
+            <form action="/deck" method="POST">
+                <button type="submit">Create a new Deck</button>
+            </form>
+        </span>  
+        <br>
+        <p>Cards Remaining: <span th:text="${deck.cardsRemaining}"></span></p>
+        
+        <form th:action="|/deck/${deck.deckId}|" method="POST">
+            <select name="count">
+                <option th:each="i : ${#numbers.sequence(0,deck.cardsRemaining)}" th:value="${i}" th:text="${i}">
+                </option>
+            </select>
+            <input type="text" name="deckId" th:value="${deck.deckId}" hidden>
+            <button type="submit">Draw</button>
+        </form>
+    </div>
+    <div>
+        <br>
+        <tr th:each="card: ${deck.cards}">
+            <td><img th:src="${card.getImgUrl}"></td>
+        </tr>
+    </div>
+</body>
+</html>
